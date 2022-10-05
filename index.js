@@ -13,6 +13,10 @@ app.use(Cors());
 
 app.listen(port,()=> console.log(`Listening on localhost ${port}`))
 
+app.get('/', (req,res)=>{
+    res.send(200).send("Hello ExpressJs");
+})
+
 app.get('/post',(req,res)=>{
     List.find((err,data)=>{
         if(err){
