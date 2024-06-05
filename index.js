@@ -6,7 +6,8 @@ import 'dotenv/config'
 const app = express()
 
 const connection = process.env.CONNECTION_KEY;
-mongoose.connect(connection,{useNewUrlParser:true} ,()=> console.log("connect"));
+mongoose.connect(connection,{useNewUrlParser:true})
+    .then(()=> console.log("connected!"))
 
 const port = process.env.PORT || 8080;
 app.use(express.json())
