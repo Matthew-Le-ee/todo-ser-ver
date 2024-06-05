@@ -2,9 +2,10 @@ import express from 'express'
 import Cors from 'cors'
 import mongoose from 'mongoose'
 import List from './Database.js'
+import 'dotenv/config'
 const app = express()
 
-const connection = 'mongodb+srv://admin:0P69WIcwaAZwHLsR@cluster0.irljc9y.mongodb.net/?retryWrites=true&w=majority';
+const connection = process.env.CONNECTION_KEY;
 mongoose.connect(connection,{useNewUrlParser:true} ,()=> console.log("connect"));
 
 const port = process.env.PORT || 8080;
