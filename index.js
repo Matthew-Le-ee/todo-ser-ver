@@ -22,42 +22,44 @@ app.get("/", (req, res) => {
 	res.status(200).send("Hello ExpressJs");
 });
 
-app.get("/post", (req, res) => {
-	List.find((err, data) => {
-		if (err) {
-			return res.status(500).send(err);
-		}
-		res.status(200).send(data);
-	});
+app.get("/post", async (req, res) => {
+	try{
+		let data = await List.find();
+		res.status(200).json(data);
+	} catch(err) {
+		res.status(500).json(err)
+	}
+	 
 });
 
-app.post("/post", (req, res) => {
+app.post("/post", async (req, res) => {
 	const data = req.body;
-	List.create(data, (err, data) => {
-		if (err) {
-			return res.status(500).send(err);
-		}
-		res.status(201).send(data);
-	});
+	try{
+		await List.create(data);
+		res.status(200).json(data);
+	} catch(err){
+		res.status(500).json(err);
+	}
+		
 });
 
-app.put("/post/:id", (req, res) => {
+app.put("/post/:id", async (req, res) => {
 	const id = req.params.id;
 	const newText = req.body;
-	List.findByIdAndUpdate(id, newText, { new: true }, (err, data) => {
-		if (err) {
-			return res.status(500).send(err);
-		}
-		res.status(200).send(data);
-	});
+	try{
+		await List.findByIdAndUpdate(id, newText);
+		res.status(200).json(newText);
+	} catch(err){
+		res.status(500).json(err);
+	}
 });
 
-app.delete("/post/:id", (req, res) => {
+app.delete("/post/:id", async (req, res) => {
 	const id = req.params.id;
-	List.findByIdAndDelete(id, (err, data) => {
-		if (err) {
-			return res.status(500).send(err);
-		}
-		res.status(200).send(data);
-	});
+	try{
+		await List.findByIdAndDelete(id);
+		res.status(200).json({"message":"data successfully Deleted"})
+	}catch(err){
+		res.status(500).json(err);
+	}
 });
