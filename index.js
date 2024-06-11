@@ -7,10 +7,7 @@ import "dotenv/config";
 const app = express();
 
 const connection = process.env.CONNECTION_KEY;
-mongoose
-	.connect(connection)
-	.then(() => console.log("connected!"))
-	.catch((err) => console.error("Connection error", err));
+mongoose.connect(connection, {useNewUrlParser:true}, () => console.log("connected!"));
 
 const port = process.env.PORT || 8080;
 app.use(express.json());
@@ -22,44 +19,43 @@ app.get("/", (req, res) => {
 	res.status(200).send("Hello ExpressJs");
 });
 
-app.get("/post", async (req, res) => {
-	try{
-		let data = await List.find();
-		res.status(200).json(data);
-	} catch(err) {
-		res.status(500).json(err)
-	}
-	 
-});
+app.get("/post", (req, res) => {
+	List.find((err, data) => {
+		if (err) {
+			return res.status(500).send(err);
+		}
+		res.status(200).send(data);
+	});
+})
 
-app.post("/post", async (req, res) => {
+app.post("/post",  (req, res) => {
 	const data = req.body;
-	try{
-		await List.create(data);
-		res.status(200).json(data);
-	} catch(err){
-		res.status(500).json(err);
-	}
+	List.create(data, (err, data) => {
+		if (err) {
+			return res.status(500).send(err);
+		}
+		res.status(201).send(data);
+	});
 		
 });
 
-app.put("/post/:id", async (req, res) => {
+app.put("/post/:id",  (req, res) => {
 	const id = req.params.id;
 	const newText = req.body;
-	try{
-		await List.findByIdAndUpdate(id, newText);
-		res.status(200).json(newText);
-	} catch(err){
-		res.status(500).json(err);
-	}
+    List.findByIdAndUpdate(id, newText, { new: true }, (err, data) => {
+	    if (err) {
+		   return res.status(500).send(err);
+	    }
+	    res.status(200).send(data);
+    });
 });
 
 app.delete("/post/:id", async (req, res) => {
 	const id = req.params.id;
-	try{
-		await List.findByIdAndDelete(id);
-		res.status(200).json({"message":"data successfully Deleted"})
-	}catch(err){
-		res.status(500).json(err);
-	}
+	List.findByIdandDelete(id, (data,err)=>{
+		if(err)
+			return res.status(500).send(err);
+		res.status(201).send(data);
+	})
+
 });
