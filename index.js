@@ -16,7 +16,7 @@ app.use(Cors());
 app.listen(port, () => console.log(`Listening on localhost ${port}`));
 
 app.get("/", (req, res) => {
-	res.send(200);
+	res.sendStatus(200);
 });
 
 app.get("/post", (req, res) => {
