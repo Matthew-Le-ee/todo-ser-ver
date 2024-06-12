@@ -1,7 +1,7 @@
 import express from "express";
 import Cors from "cors";
 import mongoose from "mongoose";
-import List from "./Database.js";
+import List from "../Database.js";
 import "dotenv/config";
 
 const app = express();

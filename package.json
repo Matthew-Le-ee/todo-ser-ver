@@ -3,13 +3,13 @@
 	"version": "1.0.0",
 	"description": "",
 	"type": "module",
-	"main": "index.js",
+	"main": "api/index.js",
 	"engines": {
 		"node": "20.x"
 	},
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "nodemon index.js"
+		"start": "nodemon api/index.js"
 	},
 	"keywords": [],
 	"author": "",
