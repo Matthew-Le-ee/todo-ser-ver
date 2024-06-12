@@ -56,7 +56,7 @@ app.put("/post/:id",  (req, res) => {
 
 app.delete("/post/:id",  (req, res) => {
 	const id = req.params.id;
-	List.findByIdandDelete(id, (data,err)=>{
+	List.findByIdAndDelete(id, (data,err)=>{
 		if(err) {
 			res.status(500).json(err);
 		} else {
