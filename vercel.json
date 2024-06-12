@@ -4,7 +4,13 @@
 		{
 			"src": "index.js",
 			"use": "@vercel/node",
-			"config": { "includeFiles": ["dist/**"] }
+			"config": { "includeFiles": ["dist/**"] },
+			"functions": {
+				"index.js": {
+					"memory": 128,
+					"maxDuration": 30
+				}
+			}
 		}
 	],
 	"routes": [
@@ -12,11 +18,5 @@
 			"src": "/(.*)",
 			"dest": "index.js"
 		}
-	],
-	"functions":{
-	    "server/index.js":{
-			"memory":128,
-		    "maxDuration":30
-		}
-	}
+	]
 }
