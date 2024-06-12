@@ -16,15 +16,15 @@ app.use(Cors());
 app.listen(port, () => console.log(`Listening on localhost ${port}`));
 
 app.get("/", (req, res) => {
-	res.sendStatus(200);
+	res.sendStatus(200).json({"message":"success"});
 });
 
 app.get("/post", (req, res) => {
 	List.find((err, data) => {
 		if (err) {
-			res.status(500).send(err);
+			res.status(500).json(err);
 		} else {
-			res.status(200).send(data);
+			res.status(200).json(data);
 		}
 	});
 })
@@ -33,9 +33,9 @@ app.post("/post",  (req, res) => {
 	const data = req.body;
 	List.create(data, (err, data) => {
 		if (err) {
-			res.status(500).send(err);
+			res.status(500).json(err);
 		} else {
-		    res.status(201).send(data);
+		    res.status(201).json(data);
 		}
 	});
 		
@@ -46,9 +46,9 @@ app.put("/post/:id",  (req, res) => {
 	const newText = req.body;
     List.findByIdAndUpdate(id, newText,  (err, data) => {
 	    if (err) {
-		   res.status(500).send(err);
+		   res.status(500).json(err);
 	    } else {
-	       res.status(200).send(data);
+	       res.status(200).json(data);
 		}
     });
 });
@@ -57,9 +57,9 @@ app.delete("/post/:id",  (req, res) => {
 	const id = req.params.id;
 	List.findByIdandDelete(id, (data,err)=>{
 		if(err) {
-			res.status(500).send(err);
+			res.status(500).json(err);
 		} else {
-		    res.status(201).send(data);
+		    res.status(201).json(data);
 		}
 	})
 
