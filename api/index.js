@@ -8,6 +8,7 @@ const app = express();
 
 const connection = process.env.CONNECTION_KEY;
 mongoose.connect(connection, {useNewUrlParser:true}, () => console.log("connected!"));
+mongoose.set('strictQuery', true);
 
 const port = process.env.PORT || 8080;
 app.use(express.json());
@@ -16,7 +17,7 @@ app.use(Cors());
 app.listen(port, () => console.log(`Listening on localhost ${port}`));
 
 app.get("/", (req, res) => {
-	res.sendStatus(200).json({"message":"success"});
+	res.status(200).json({"message":"success"});
 });
 
 app.get("/post", (req, res) => {
